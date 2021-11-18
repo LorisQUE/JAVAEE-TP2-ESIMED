@@ -12,7 +12,6 @@ import java.util.Objects;
 public class Group implements Serializable {
 
     @Id
-    @Column(columnDefinition = "TEXT")
     private String groupName;
 
     public Group(String groupName) {
