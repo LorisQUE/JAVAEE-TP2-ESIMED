@@ -1,4 +1,4 @@
-package tp.javaee.stockmarket;
+package montp.api;
 
 import java.util.Collection;
 import java.util.Set;
