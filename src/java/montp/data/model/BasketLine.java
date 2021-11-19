@@ -12,6 +12,12 @@ public class BasketLine extends GenericEntity{
 
     public BasketLine() { }
 
+    public BasketLine(User user, String company, Double quote) {
+        this.user = user;
+        this.company = company;
+        this.quote = quote;
+    }
+
     @OneToOne
     private User user;
     private String company;

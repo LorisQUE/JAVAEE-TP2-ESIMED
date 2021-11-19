@@ -19,15 +19,17 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @ViewScoped
 @Named("index")
 public class IndexView implements Serializable {
 
     @Inject private UserSession session;
-
     @Inject private UserService userService;
     @Inject private BasketLineService basketLineService;
     @Inject private EMailer eMailer;
@@ -41,25 +43,19 @@ public class IndexView implements Serializable {
         Logger.log(Logger.LogLevel.INFO, IndexView.class.getSimpleName(), "initializing view controller");
     }
 
-    public String getHello() {
-        return String.format(messages.get("basket"), session.getUser());
-    }
-
     public Collection<BasketLine> getBasketLines() { return basketLineService.getUserBasket(session.getUser()); }
 
-    public boolean isUserActive(User user) { return userService.isActive(user); }
+    public String getVariation(Double currentQuote, Double oldQuote) {
+        if(Objects.equals(currentQuote, oldQuote)) return "-";
 
-    public void sendMail() {
-        if (!emailTo.strip().isEmpty()) {
-            try {
-                eMailer.send(emailTo, messages.get("example.mailsubject"), messages.get("example.mailcontent"));
-                FacesTools.addMessage(FacesMessage.SEVERITY_INFO, messages.get("example.mailsent"));
-            } catch (MessagingException e) {
-                FacesTools.addMessage(FacesMessage.SEVERITY_ERROR, messages.get("example.mailerror"), e.getMessage());
-            }
-        }
+        double percent = ((currentQuote - oldQuote)/oldQuote) * 100;
+
+        percent = BigDecimal.valueOf(percent)
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
+
+        String symbol = currentQuote > oldQuote ? "+" : "";
+
+        return symbol + percent + "%";
     }
-
-    public String getEmailTo() { return emailTo;   }
-    public void setEmailTo(String emailTo) {  this.emailTo = emailTo;  }
 }
