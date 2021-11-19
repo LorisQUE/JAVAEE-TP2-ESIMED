@@ -1,7 +1,11 @@
 package montp.web.controllers;
 
+import montp.api.Company;
+import montp.api.StockMarket;
+import montp.data.model.BasketLine;
 import montp.data.model.security.User;
 import montp.locale.Messages;
+import montp.services.BasketLineService;
 import montp.services.UserService;
 import montp.tools.EMailer;
 import montp.tools.Logger;
@@ -15,6 +19,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 @ViewScoped
@@ -24,8 +29,10 @@ public class IndexView implements Serializable {
     @Inject private UserSession session;
 
     @Inject private UserService userService;
+    @Inject private BasketLineService basketLineService;
     @Inject private EMailer eMailer;
     @Inject private Messages messages;
+    @Inject private StockMarket stockMarket;
 
     private String emailTo;
 
@@ -35,10 +42,10 @@ public class IndexView implements Serializable {
     }
 
     public String getHello() {
-        return String.format(messages.get("example.hello"), session.getUser());
+        return String.format(messages.get("basket"), session.getUser());
     }
 
-    public List<User> getUsers() { return userService.getUsers(); }
+    public Collection<BasketLine> getBasketLines() { return basketLineService.getUserBasket(session.getUser()); }
 
     public boolean isUserActive(User user) { return userService.isActive(user); }
 
