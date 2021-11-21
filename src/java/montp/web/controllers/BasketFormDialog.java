@@ -59,6 +59,8 @@ public class BasketFormDialog implements Serializable {
 
             service.insert(basketLine);
         }
+
+        indexView.init();
         
     }
 
