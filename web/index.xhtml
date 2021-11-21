@@ -18,7 +18,7 @@
             </h:panelGrid>
             <h:form id="formDataTableBasket">
                 <p:dataTable id="dataTableBasket"
-                        value="#{index.basketLines}"
+                        value="#{index.lines}"
                         var="line"
                         sortBy="#{line.company}">
                     <p:column headerText="#{msg['company.symbol']}" sortBy="#{line.company}" filterBy="#{line.company}">
@@ -28,11 +28,29 @@
                         <h:outputFormat value="#{msg['basket.quotas']}"><f:param value="#{line.quote}"/></h:outputFormat>
                     </p:column>
                     <p:column headerText="#{msg['basket.variation']}">
-                        <!-- TODO : Récupérer les réel cotation -->
+                        <!-- TODO : Récupérer les réels cotations -->
                         #{index.getVariation(60.57, line.quote)}
                     </p:column>
+                    <p:column headerText="#{msg['app.actions']}">
+                        <p:growl/>
+
+                        <p:commandButton
+                                icon="fa fa-trash"
+                                styleClass="dataTableActions"
+                                title="#{msg['app.delete']}"
+                                actionListener="#{index.deleteLine(line)}"
+                                update="@form,formDataTableBasket:dataTableBasket"
+                                process="@this"
+                        >
+                            <p:confirm
+                                    header="#{msg['app.delete']}"
+                                    message="#{msg['app.deleteConfirm']}"
+                                    icon="fa fa-question-circle"
+                            />
+                        </p:commandButton>
+                    </p:column>
                     <f:facet name="footer">
-                        <h:outputFormat value="#{msg['basket.linesCount']}"><f:param value="#{index.basketLines.size()}"/></h:outputFormat>
+                        <h:outputFormat value="#{msg['basket.linesCount']}"><f:param value="#{index.lines.size()}"/></h:outputFormat>
                     </f:facet>
                 </p:dataTable>
             </h:form>
@@ -40,4 +58,5 @@
         <ui:include src="dialogs/dlg_basket_form.xhtml"/>
     </ui:define>
 </ui:composition>
+
 

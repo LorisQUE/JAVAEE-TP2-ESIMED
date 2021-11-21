@@ -29,6 +29,7 @@ import java.util.Objects;
 @Named("index")
 public class IndexView implements Serializable {
 
+    @Inject Messages message;
     @Inject private UserSession session;
     @Inject private UserService userService;
     @Inject private BasketLineService basketLineService;
@@ -36,14 +37,13 @@ public class IndexView implements Serializable {
     @Inject private Messages messages;
     @Inject private StockMarket stockMarket;
 
-    private String emailTo;
+    private Collection<BasketLine> lines;
 
     @PostConstruct
     public void init() {
+        lines = basketLineService.getUserBasket(session.getUser());
         Logger.log(Logger.LogLevel.INFO, IndexView.class.getSimpleName(), "initializing view controller");
     }
-
-    public Collection<BasketLine> getBasketLines() { return basketLineService.getUserBasket(session.getUser()); }
 
     public String getVariation(Double currentQuote, Double oldQuote) {
         if(Objects.equals(currentQuote, oldQuote)) return "-";
@@ -57,5 +57,25 @@ public class IndexView implements Serializable {
         String symbol = currentQuote > oldQuote ? "+" : "";
 
         return symbol + percent + "%";
+    }
+
+    public void deleteLine(BasketLine line) {
+
+        if(line != null) {
+            basketLineService.delete(line);
+            lines.remove(line);
+            FacesTools.addMessage(FacesMessage.SEVERITY_INFO, message.get("app.delete"));
+        } else {
+            FacesTools.addMessage(FacesMessage.SEVERITY_ERROR, message.get("app.delete.error"));
+        }
+
+    }
+
+    public Collection<BasketLine> getLines() {
+        return lines;
+    }
+
+    public void setLines(Collection<BasketLine> lines) {
+        this.lines = lines;
     }
 }
