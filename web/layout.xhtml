@@ -11,10 +11,17 @@
         <title>#{msg['app.title']}</title>
     </h:head>
     <h:body>
+        <p:commandButton
+                id="logout"
+                rendered="#{userSession.user != null}"
+                value="#{msg['app.logout']}"
+                action="#{userSession.logout}">
+
+        </p:commandButton>
         <p:confirmDialog global="true">
             <p:commandButton value="Oui"
                              type="button"
-                             styleClass="ui-confirmdialog-yes" 
+                             styleClass="ui-confirmdialog-yes"
                              icon="fa fa-check"/>
         </p:confirmDialog>
         <p:dialog widgetVar="dlgStatus" modal="true" draggable="false"
