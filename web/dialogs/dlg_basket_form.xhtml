@@ -5,12 +5,12 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <p:dialog widgetVar="dlgBasketForm"
               id="dlgBasketForm"
-              header="PLACEHOLDER"
+              header="#{msg['basket.add.companies']}"
               modal="true"
               closeOnEscape="true">
 
         <h:form id="basketForm">
-
+            <p:outputLabel value="#{msg['basket.dlg.select.companies']}" />
             <p:autoComplete id="countries" multiple="true" value="#{basketFormDialog.companies}"
                             completeMethod="#{basketFormDialog.completeCompany}"
                             var="company" itemLabel="#{company.symbol} - #{company.name}" itemValue="#{company.symbol}"
