@@ -35,7 +35,7 @@ public class Seeder {
             groupes.add(groupUser);
             userUser1.setGroups(groupes);
             userService.insert(userUser1);
-            User userAdmin = new User("admin", "lquetglas@esimed.fr", "admin");
+            User userAdmin = new User("admin", "admin", "admin");
             groupes.add(groupAdmin);
             userAdmin.setGroups(groupes);
             userService.insert(userAdmin);

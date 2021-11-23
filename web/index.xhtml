@@ -24,12 +24,12 @@
                     <p:column headerText="#{msg['company.symbol']}" sortBy="#{line.company}" filterBy="#{line.company}">
                         #{line.company}
                     </p:column>
-                    <p:column headerText="#{msg['company.quotas']}" sortBy="#{line.quote}">
-                        <h:outputFormat value="#{msg['basket.quotas']}"><f:param value="#{line.quote}"/></h:outputFormat>
+                    <p:column headerText="#{msg['company.quotas']}" sortBy="#{line.currentQuote}">
+                        <h:outputFormat value="#{msg['basket.quotas']}"><f:param value="#{line.currentQuote}"/></h:outputFormat>
                     </p:column>
                     <p:column headerText="#{msg['basket.variation']}">
                         <!-- TODO : Récupérer les réels cotations -->
-                        #{index.getVariation(60.57, line.quote)}
+                        #{index.getVariation(line)}
                     </p:column>
                     <p:column headerText="#{msg['app.actions']}">
                         <p:growl/>

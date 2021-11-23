@@ -6,6 +6,7 @@ import montp.data.model.security.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
+import java.util.Set;
 
 @ApplicationScoped
 public class BasketLineService extends GenericService<BasketLine, BasketLineDAO> {
@@ -14,4 +15,9 @@ public class BasketLineService extends GenericService<BasketLine, BasketLineDAO>
         return dao.getUserBasket(user);
     }
 
+    public Set<String> getAllUniqueSymbols() {
+        return dao.getAllUniqueSymbols();
+    }
+
+    public void updateCurrentQuote(String company, Double currentQuote) { dao.updateCurrentQuote(company, currentQuote); }
 }

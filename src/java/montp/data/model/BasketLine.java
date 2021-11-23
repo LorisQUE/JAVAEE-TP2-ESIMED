@@ -12,20 +12,22 @@ public class BasketLine extends GenericEntity{
 
     public BasketLine() { }
 
-    public BasketLine(User user, String company, Double quote) {
+    public BasketLine(User user, String company, Double baseQuote) {
         this.user = user;
         this.company = company;
-        this.quote = quote;
+        this.baseQuote = baseQuote;
+        this.currentQuote = baseQuote;
     }
 
     @OneToOne
     private User user;
     private String company;
-    private Double quote;
+    private Double baseQuote;
+    private Double currentQuote;
 
     @Override
     public String toString() {
-        return company + "(" + quote + "€)";
+        return company + "(" + currentQuote + "€)";
     }
 
     public User getUser() {
@@ -44,11 +46,19 @@ public class BasketLine extends GenericEntity{
         this.company = company;
     }
 
-    public Double getQuote() {
-        return quote;
+    public Double getBaseQuote() {
+        return baseQuote;
     }
 
-    public void setQuote(Double quote) {
-        this.quote = quote;
+    public void setBaseQuote(Double baseQuote) {
+        this.baseQuote = baseQuote;
+    }
+
+    public Double getCurrentQuote() {
+        return currentQuote;
+    }
+
+    public void setCurrentQuote(Double currentQuote) {
+        this.currentQuote = currentQuote;
     }
 }
