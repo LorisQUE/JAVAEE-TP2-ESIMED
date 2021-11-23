@@ -4,6 +4,7 @@ import montp.data.model.BasketLine;
 import montp.data.model.security.User;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,11 +28,12 @@ public class BasketLineDAO extends GenericDAO<BasketLine>{
         return new HashSet<>(result);
     }
 
+    @Transactional
     public void updateCurrentQuote(String company, Double currentQuote) {
-        em.createQuery("UPDATE BasketLine b SET b.currentQuote = :currentQuote WHERE b.company = :company")
-                .setParameter("currentQuote", currentQuote)
-                .setParameter("company", company)
-                .getResultList();
+        em.createNativeQuery("UPDATE BASKET_LINE SET BASKET_LINE.currentQuote=?1 WHERE BASKET_LINE.company=?2")
+                .setParameter(1, currentQuote)
+                .setParameter(2, company)
+                .executeUpdate();
     }
 
 }
