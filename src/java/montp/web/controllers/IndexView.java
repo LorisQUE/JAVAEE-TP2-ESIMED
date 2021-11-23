@@ -1,10 +1,8 @@
 package montp.web.controllers;
 
-import montp.api.Company;
 import montp.api.Quote;
 import montp.api.StockMarket;
 import montp.data.model.BasketLine;
-import montp.data.model.security.User;
 import montp.locale.Messages;
 import montp.services.BasketLineService;
 import montp.services.UserService;
@@ -15,16 +13,13 @@ import montp.web.UserSession;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.mail.MessagingException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -66,6 +61,8 @@ public class IndexView implements Serializable {
     }
 
     public void actualizeQuote() {
+        Logger.log(Logger.LogLevel.INFO, IndexView.class.getSimpleName(), "Update and actualize quote");
+
         // Méthode pour le poll
         // TODO :
         //  On récupère toutes les lignes du panier

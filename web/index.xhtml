@@ -3,8 +3,10 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                template="./layout.xhtml">
+                template="./layout.xhtml" >
     <ui:define name="content">
+
+
         <p:card>
             <!-- TODO : Utilisation  de <p:poll> pour actualisation infos -->
             <f:facet name="title">#{msg['basket.title']}</f:facet>
@@ -17,6 +19,7 @@
                                  process="@this"/>
             </h:panelGrid>
             <h:form id="formDataTableBasket">
+                <p:poll id="pollServer" interval="300" listener="#{index.actualizeQuote}" async="true" immediate="true" process="@this" update="dataTableBasket"/>
                 <p:dataTable id="dataTableBasket"
                         value="#{index.lines}"
                         var="line"
@@ -24,12 +27,14 @@
                     <p:column headerText="#{msg['company.symbol']}" sortBy="#{line.company}" filterBy="#{line.company}">
                         #{line.company}
                     </p:column>
+
                     <p:column headerText="#{msg['company.quotas']}" sortBy="#{line.currentQuote}">
                         <h:outputFormat value="#{msg['basket.quotas']}"><f:param value="#{line.currentQuote}"/></h:outputFormat>
                     </p:column>
                     <p:column headerText="#{msg['basket.variation']}">
-                        <!-- TODO : Récupérer les réels cotations -->
-                        #{index.getVariation(line)}
+                        <h:outputText id="variation" value="#{index.getVariation(line)}">
+
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="#{msg['app.actions']}">
                         <p:growl/>
