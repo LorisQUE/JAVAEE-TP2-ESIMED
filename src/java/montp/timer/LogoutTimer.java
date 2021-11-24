@@ -32,7 +32,7 @@ public class LogoutTimer {
         Logger.log(Logger.LogLevel.INFO, IndexView.class.getSimpleName(), "updateQuotesAndSendMail");
         User user = userSession.getUser();
 
-        if(user != null && userService.isActive(user)) {
+        if(user != null && !userService.isActive(user)) {
             userSession.logout();
             FacesTools.redirect("index");
         }
