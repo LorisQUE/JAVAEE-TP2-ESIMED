@@ -3,6 +3,8 @@ package montp.web.controllers;
 import montp.data.model.security.Group;
 import montp.data.model.security.User;
 import montp.services.UserService;
+import montp.web.FacesTools;
+import montp.web.UserSession;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -19,6 +21,7 @@ import java.util.List;
 public class RegisterView implements Serializable {
 
     @Inject private HttpServletRequest httpServletRequest;
+    @Inject private UserSession userSession;
     @Inject private UserService userService;
     private User user;
 
@@ -28,8 +31,6 @@ public class RegisterView implements Serializable {
     }
 
     public void register() throws Exception {
-
-        // TODO : Après inscription, autoconnect et redirect sur l'index
         if(user != null) {
             String email = user.getEmail();
             String password = user.getPassword();
@@ -40,7 +41,8 @@ public class RegisterView implements Serializable {
             userService.insert(user);
 
             httpServletRequest.login(email, password);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+            userSession.init();
+            FacesTools.redirect("index");
         }
     }
 

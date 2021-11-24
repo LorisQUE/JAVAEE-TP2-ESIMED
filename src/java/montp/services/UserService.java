@@ -21,6 +21,10 @@ public class UserService extends GenericService<User, UserDAO> {
         return dao.getFromUsername(username.toLowerCase().trim());
     }
 
+    public User getFromEmail(String email) {
+        return dao.getFromEmail(email);
+    }
+
     public Group getGroup(String groupname) {
         return dao.getGroup(groupname.toUpperCase().trim());
     }

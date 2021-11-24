@@ -28,6 +28,12 @@ public class UserDAO extends GenericDAO<User> {
                 .getSingleResult();
     }
 
+    public User getFromEmail(String email) {
+        return (User) em.createQuery("SELECT u FROM User u WHERE u.email=:email")
+                .setParameter("email", email)
+                .getSingleResult();
+    }
+
     public Group getGroup(String groupname) {
         return em.find(Group.class, groupname);
     }

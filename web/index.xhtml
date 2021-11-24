@@ -8,7 +8,6 @@
 
 
         <p:card>
-            <!-- TODO : Utilisation  de <p:poll> pour actualisation infos -->
             <f:facet name="title">#{msg['basket.title']}</f:facet>
             <p:growl/>
             <h:panelGrid columns="3" cellpadding="5">
@@ -19,7 +18,7 @@
                                  process="@this"/>
             </h:panelGrid>
             <h:form id="formDataTableBasket">
-                <p:poll id="pollServer" interval="300" listener="#{index.actualizeQuote}" async="true" immediate="true" process="@this" update="dataTableBasket"/>
+                <p:poll id="pollServer" interval="300" listener="#{index.lines}" async="true" immediate="true" process="@this" update="@form,formDataTableBasket:dataTableBasket"/>
                 <p:dataTable id="dataTableBasket"
                         value="#{index.lines}"
                         var="line"

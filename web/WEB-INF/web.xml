@@ -63,7 +63,8 @@
         </auth-constraint>
     </security-constraint>
 
-    <!-- TODO : Attention, les users ont accès à TOUT -->
+    <!-- TODO : Attention, les users ont accès à TOUT
+          Attention a bien modifier lors de l'ajout des fonctionnalitées backoffices-->
     <security-constraint>
         <display-name>user</display-name>
         <web-resource-collection>
