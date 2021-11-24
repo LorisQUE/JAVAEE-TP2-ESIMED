@@ -23,17 +23,19 @@ import java.util.List;
 import java.util.Set;
 
 @Stateless
-public class LogoutTimer {
-    @Inject private UserSession userSession;
-    @Inject private UserService userService;
+public class UpdateQuotesTimer {
+    @Inject private StockMarket stockMarket;
+    @Inject private BasketLineService basketLineService;
 
-    @Schedule(second = "*/5", minute = "*", hour = "*")
-    public void loggingOut() {
-        User user = userSession.getUser();
+    @Schedule(minute = "*/5", hour = "*")
+    public void updateQuotes() {
+        Logger.log(Logger.LogLevel.INFO, IndexView.class.getSimpleName(), "Updating quotes...");
 
-        if(user != null && !userService.isActive(user)) {
-            userSession.logout();
-            FacesTools.redirect("index");
+        Set<String> symbols = basketLineService.getAllUniqueSymbols();
+        Collection<Quote> quotes = stockMarket.getQuotes(symbols);
+
+        for (Quote quote :quotes) {
+            basketLineService.updateCurrentQuote(quote.getCompany().getSymbol(), quote.getQuote());
         }
     }
 }
