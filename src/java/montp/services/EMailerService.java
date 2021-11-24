@@ -13,8 +13,8 @@ public class EMailerService extends EMailer {
 
     public EMailerService() {
         super("mail.esimed.fr",
-               "mon_login@esimed.fr",
-               "mon_mot_de_passe",
+               "exempletp@esimed.fr",
+               "!Azerty123",
                587);
     }
 
