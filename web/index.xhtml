@@ -8,6 +8,11 @@
 
 
         <p:card>
+
+            <p:linkButton outcome="users" value="#{msg['example.userslist']}" rendered="#{userSession.admin}">
+
+            </p:linkButton>
+
             <f:facet name="title">#{msg['basket.title']}</f:facet>
             <p:growl/>
             <h:panelGrid columns="3" cellpadding="5">

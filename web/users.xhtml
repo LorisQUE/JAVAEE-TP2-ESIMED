@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="./layout.xhtml" >
+    <ui:define name="content">
+        <p:card>
+            <f:facet name="title">#{msg['example.userslist']}</f:facet>
+            <p:growl/>
+            <h:panelGrid columns="3" cellpadding="5">
+            </h:panelGrid>
+            <h:form id="formDataTableUsers">
+
+                <p:dataTable id="dataTableUsers"
+                             value="#{users.users}"
+                             var="user"
+                             sortBy="#{user.email}">
+                    <p:column headerText="#{msg['example.username']}" sortBy="#{user.userName}" filterBy="#{user.userName}">
+                        #{user.userName}
+                    </p:column>
+                    <p:column headerText="#{msg['example.email']}" sortBy="#{user.email}" filterBy="#{user.email}">
+                        #{user.email}
+                    </p:column>
+                    <p:column headerText="#{msg['example.isuseractive']}">
+
+                        <p:selectBooleanCheckbox id="checkboxActive" value="#{users.isUserActive(user)}" disabled="true">
+
+                            <f:ajax event="change" execute="checkboxActive" listener="#{users.onCheckboxClick(user)}"/>
+
+                        </p:selectBooleanCheckbox>
+
+                    </p:column>
+
+
+                    <f:facet name="footer">
+                        <h:outputFormat value="#{msg['example.userscount']}"><f:param value="#{users.users.size()}"/></h:outputFormat>
+                    </f:facet>
+                </p:dataTable>
+            </h:form>
+        </p:card>
+    </ui:define>
+</ui:composition>
+
+
